@@ -5,7 +5,10 @@ Installation:
 4. Start the application: `npm start`
 
 Push Changes to the Repository:
-1.git push origin (the file you changed)
+1.For example you want change server.js you do that : 
+git add server.js
+git commit -m "Added /about route in server.js"
+2.git push origin main
 
 
 Usage:
