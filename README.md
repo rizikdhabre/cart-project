@@ -4,6 +4,10 @@ Installation:
 3. Install dependencies: `npm install`
 4. Start the application: `npm start`
 
+Push Changes to the Repository:
+1.git push origin (the file you changed)
+
+
 Usage:
 1. Open your browser and navigate to: `http://localhost:3000`
 2. Browse the catalog of products.
