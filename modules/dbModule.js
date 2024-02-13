@@ -1,16 +1,19 @@
 const { MongoClient, ObjectId } = require("mongodb")
 
-const url = "<Enter your connection string here>"
-const dbName = "todos_db"
+const url = "mongodb+srv://rizikdhabre1802:qwerT123@rizikd.capewfm.mongodb.net/"
+const dbName = "cart"
 
 const client = new MongoClient(url)
 
+let dbConnection = null
+
 async function connectDb() {
   try {
+    if (dbConnection) return dbConnection
     await client.connect()
     console.log("Connected to DB😎")
-    const db = client.db(dbName)
-    return db
+    dbConnection = client.db(dbName)
+    return dbConnection
   } catch (error) {
     console.error("Connection to DB failed:", error)
     throw error
