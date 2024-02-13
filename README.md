@@ -19,11 +19,11 @@ Usage:
 4. Proceed to checkout and complete the order.
 
 Technologies Used:
-MongoDB
-Express.js
-Node.js
-HTML/CSS
-JavaScript
+1)MongoDB
+2)Express.js
+3)Node.js
+4)HTML/CSS
+5)JavaScript
 
 
 
