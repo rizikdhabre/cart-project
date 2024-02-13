@@ -1,5 +1,6 @@
 "use strict";
 let errorDiv;
+
 async function signup(event) {
   try {
     event.preventDefault();
@@ -42,10 +43,11 @@ async function signup(event) {
   }
 }
 
-async function login(event) {
- try {
 
-    event.preventDefault()
+
+async function login(event) {
+  try {
+    event.preventDefault();
     resetErrorMessages;
     const username = document.getElementById("username").value;
     const password = document.getElementById("password").value;
@@ -54,21 +56,35 @@ async function login(event) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username, password }),
     });
-  
+
     const data = await response.json();
     if (!data.success) {
-        if(!errorDiv){
+      if (!errorDiv) {
         const passwordInput = document.getElementById("password");
-      showError(passwordInput, "incorrect account or password");
-      return
-        }
-        return
+        showError(passwordInput, "incorrect username or password");
+        return;
+      }
+      return;
     }
-    window.location.href = "/home.html";
-    
- } catch (error) {
-        console.log(error)
- }
+    const loggedInUser=data.username
+    storageService.setUser(loggedInUser)
+    window.location.href = "/home.html"
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+function logout() {
+  storageService.clearAll()
+  window.location.href = "/login.html"
+}
+
+function init(){
+  const user = storageService.getUser()
+  if (!user) {
+    window.location.href = "login.html"
+    return
+  }
 }
 
 function validationFunc(email, password) {
@@ -81,7 +97,7 @@ function validationFunc(email, password) {
   return 0;
 }
 function showError(inputElement, errorMessage) {
-   errorDiv = document.createElement("div");
+  errorDiv = document.createElement("div");
   errorDiv.className = "error-message";
   errorDiv.textContent = errorMessage;
   errorDiv.style.color = "red";
@@ -93,5 +109,3 @@ function resetErrorMessages() {
   const errorMessages = document.querySelectorAll(".error-message");
   errorMessages.forEach((errorMessage) => errorMessage.remove());
 }
-
-

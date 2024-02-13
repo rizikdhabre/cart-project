@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/home.css" />
+    <title>Home Page Cart</title>
+  </head>
+  <body onload="init()">
+    <div class="container">
+        <div class="toolbar">
+            <div class="welcome-class nav-button">Welcome, 
+            <span class="curr-userName">Rizik</span></div>
+            <div class="nav-links">
+                <button class="nav-button" id="homeButton">Home</button>
+                <button class="nav-button" id="productsButton">Products</button>
+                <button class="nav-button" id="cartButton">Cart</button>
+                <button class="nav-button" id="accountButton">Account</button>
+                <button class="nav-button" id="logoutButton" onclick="logout()">Logout</button>
+            </div>
+          </div>
+        
+    </div>
+    <script src="js/storageService.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>

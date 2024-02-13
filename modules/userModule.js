@@ -25,7 +25,7 @@ async function addUser(username, email, password) {
     if ((!existUser)||!(existUser.password===password)) {
       return {success:false}
     }
-    return {success:true}
+    return {success:true , username:username}
   }
 
   module.exports={addUser,getUserByUserAndPassword}
