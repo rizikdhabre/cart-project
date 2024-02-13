@@ -6,7 +6,7 @@ Installation:
 
 Push Changes to the Repository:
 1.git pull origin main
-2.git add
+2.git add .
 3.git commit -m "Your descriptive commit message here"
 4.git push origin main
 
