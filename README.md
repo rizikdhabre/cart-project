@@ -5,11 +5,11 @@ Installation:
 4. Start the application: `npm start`
 
 Push Changes to the Repository:
-1. first step: git pull origin main
-2. second step : git add .
-3. third step:git commit -m "Your descriptive commit message here"
-4. fourth step : git pull origin main
-5.  last step to push all changes :git push origin main
+1. first step:  git pull origin main
+2. second step :  git add .
+3. third step:   git commit -m "Your descriptive commit message here"
+4. fourth step :  git pull origin main
+5.  last step to push all changes:  git push origin main
 
 
 Usage:
