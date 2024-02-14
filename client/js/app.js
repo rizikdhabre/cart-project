@@ -67,6 +67,7 @@ async function login(event) {
       return;
     }
     const loggedInUser=data.username
+    console.log(loggedInUser)
     storageService.setUser(loggedInUser)
     window.location.href = "/home.html"
   } catch (error) {
@@ -79,12 +80,20 @@ function logout() {
   window.location.href = "/login.html"
 }
 
+function  initLogin(){
+  const user=storageService.getUser()
+  if(user){
+    window.location.href="/home.html"
+  }
+}
+
 function init(){
   const user = storageService.getUser()
   if (!user) {
     window.location.href = "login.html"
     return
   }
+  document.getElementById("curr-userName").textContent=user
 }
 
 function validationFunc(email, password) {
