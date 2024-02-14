@@ -43,6 +43,10 @@ async function signup(event) {
   }
 }
 
+function goProducts(){
+    window.location.href="/products.html"
+}
+
 
 
 async function login(event) {

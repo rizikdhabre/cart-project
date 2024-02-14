@@ -8,19 +8,59 @@
   </head>
   <body onload="init()">
     <div class="container">
-        <div class="toolbar">
-            <div class="welcome-class nav-button">Welcome, 
-            <span class="curr-userName" id="curr-userName"></span></div>
-            <div class="nav-links">
-                <button class="nav-button" id="homeButton">Home</button>
-                <button class="nav-button" id="productsButton">Products</button>
-                <button class="nav-button" id="cartButton">Cart</button>
-                <button class="nav-button" id="accountButton">Account</button>
-                <button class="nav-button" id="logoutButton" onclick="logout()">Logout</button>
-            </div>
-          </div>
-        <div>
+      <div class="toolbar">
+        <div class="welcome-class nav-button">
+          Welcome, <span class="curr-userName" id="curr-userName"></span>
         </div>
+        <div class="cart-Name">Silk Road Cart</div>
+        <div class="nav-links">
+          <button class="nav-button" id="productsButton" onclick="goProducts()">Products</button>
+          <button class="nav-button" id="cartButton">Cart</button>
+          <button class="nav-button" id="accountButton">Account</button>
+          <button class="nav-button" id="logoutButton" onclick="logout()">
+            Logout
+          </button>
+        </div>
+      </div>
+      <div class="rest-body-container">
+        <h1>
+          Explore our diverse range of products on our product page and discover
+          the perfect solutions tailored just for you. <span><a href="products.html">Click here</a></span> to delve into
+          the heart of our website and unlock a world of possibilities
+        </h1>
+        <div class="photosHome-container">
+          <img src="./imagesHome/Outfit.png" alt="outfit">
+          <p class="sentence-tag">Men Outfit</p>
+        </div>
+        <div class="photosHome-container">
+          <img src="./imagesHome/womenClothes.png" alt="outfit">
+          <p class="sentence-tag">Women's Clothing</p>
+        </div>
+        <div class="photosHome-container">
+          <img src="./imagesHome/Shoes.png" alt="outfit">
+          <p class="sentence-tag">Shoes</p>
+        </div>
+        <div class="photosHome-container">
+          <img src="./imagesHome/Computer&Office.png" alt="outfit">
+          <p class="sentence-tag">Computer&Office</p>
+        </div>
+        <div class="photosHome-container">
+          <img src="./imagesHome/Accessories.png" alt="outfit">
+          <p class="sentence-tag">Accessories</p>
+        </div>
+        <div class="photosHome-container">
+          <img src="./imagesHome/Toys&Games.png" alt="outfit">
+          <p class="sentence-tag">Toys & Games</p>
+        </div>
+        <div class="photosHome-container">
+          <img src="./imagesHome/Home&Garden.png" alt="outfit">
+          <p class="sentence-tag">Home & Garden</p>
+        </div>
+        <div class="photosHome-container">
+          <img src="./imagesHome/Tools&Industrial.png" alt="outfit">
+          <p class="sentence-tag">Tools & Industrial</p>
+        </div>
+      </div>
     </div>
     <script src="js/storageService.js"></script>
     <script src="js/app.js"></script>
