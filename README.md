@@ -1,5 +1,5 @@
 Installation:
-1. Clone the repository: `git clone https://github.com/rizikdhabre/cart-project.git`
+1. Clone the repository: `git clone https://github.com/rizikdhabre/cart-project.git` (only once)
 2. Navigate to the project directory: `cd your-project`
 3. Install dependencies: `npm install`
 4. Start the application: `npm start`
