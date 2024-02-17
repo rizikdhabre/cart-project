@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/products.css" />
+    <title>silk Road Products</title>
+  </head>
+  <body onload="init()">
+    <div class="container">
+      <div class="toolbar">
+        <div class="welcome-class nav-button">
+          Welcome, <span class="curr-userName" id="curr-userName"></span>
+        </div>
+        <div class="cart-Name">Silk Road Cart</div>
+        <div class="nav-links">
+          <button class="nav-button" id="productsButton" onclick="goHome()">
+            Home
+          </button>
+          <button class="nav-button" id="cartButton" onclick="goCart()">Cart</button>
+          <button class="nav-button" id="accountButton">Account</button>
+          <button class="nav-button" id="logoutButton" onclick="logout()">
+            Logout
+          </button>
+        </div>
+      </div>
+      <div class="rest-body-container">
+        <h1>Men Outfit</h1>
+        <div class="menOutfit-container">
+          <div class="men-item"  id="men-item1">
+            <img src="./imagesHome/menOutfit.png" alt="outfit-men" />
+            <p class="price-men-Outfit">
+              Price : 150₪ <button class="add-cart-btn" onclick="addToCart('men-item1',150)">Add To Cart</button>
+            </p>
+          </div>
+          <div class="men-item" id="men-item2">
+            <img src="./imagesHome/menOutfit.png" alt="outfit-men" />
+            <p class="price-men-Outfit">
+              Price : 150₪ <button class="add-cart-btn" onclick="addToCart()">Add To Cart</button>
+            </p>
+          </div>
+          <div class="men-item" id="men-item3">
+            <img src="./imagesHome/menOutfit.png" alt="outfit-men" />
+            <p class="price-men-Outfit">
+              Price : 150₪ <button class="add-cart-btn" onclick="addToCart()">Add To Cart</button>
+            </p>
+          </div>
+          <div class="men-item" id="men-item4">
+            <img src="./imagesHome/menOutfit.png" alt="outfit-men" />
+            <p class="price-men-Outfit">Price : <span id="price">150</span>₪</p>
+            <button class="add-cart-btn" onclick="addToCart()">Add To Cart</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="js/storageService.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>

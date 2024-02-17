@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/cart.css">
+    <title>My Cart</title>
+</head>
+<body onload="init()">
+    <div class="cart-contaienr">
+        <div class="toolbar">
+            <div class="welcome-class nav-button">
+              Welcome, <span class="curr-userName" id="curr-userName"></span>
+            </div>
+            <div class="cart-Name">Silk Road Cart</div>
+            <div class="nav-links">
+              <button class="nav-button" id="productsButton" onclick="goHome()">
+                Home
+              </button>
+              <button class="nav-button" id="cartButton" onclick="goProducts()">Products</button>
+              <button class="nav-button" id="accountButton">Account</button>
+              <button class="nav-button" id="logoutButton" onclick="logout()">
+                Logout
+              </button>
+            </div>
+          </div>
+          <div class="table-container">
+            <table class="cart-table">
+              <tr>
+                <th>Item Name</th>
+                <th>Quantity</th>
+                <th>Price</th>
+              </tr>
+              <tbody class="table-rows"></tbody>
+            </table>
+          </div>
+          
+    </div>
+
+    <script src="js/storageService.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

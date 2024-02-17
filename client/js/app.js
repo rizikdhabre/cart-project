@@ -46,6 +46,12 @@ async function signup(event) {
 function goProducts(){
     window.location.href="/products.html"
 }
+function goHome(){
+  window.location.href="/home.html"
+}
+function goCart(){
+  window.location.href="/cart.html"
+}
 
 
 
@@ -70,8 +76,7 @@ async function login(event) {
       }
       return;
     }
-    const loggedInUser=data.username
-    console.log(loggedInUser)
+    const loggedInUser=data.user
     storageService.setUser(loggedInUser)
     window.location.href = "/home.html"
   } catch (error) {
@@ -91,13 +96,27 @@ function  initLogin(){
   }
 }
 
-function init(){
-  const user = storageService.getUser()
+async function init(){
+  try {
+    const user = storageService.getUser()
+  const username=user.username
   if (!user) {
     window.location.href = "login.html"
     return
   }
-  document.getElementById("curr-userName").textContent=user
+  document.getElementById("curr-userName").textContent=username
+  const response = await fetch(`/api/item?userId=${user._id}`)
+  const data = await response.json()
+  if (!data.success) return alert(data.message)
+  const loadedItems = data.items
+  if (loadedItems || loadedItems.length > 0) {
+    storageService.setItems(loadedItems)
+    renderItems(loadedItems)
+  }
+  } catch (error) {
+    console.log(error)
+  }
+
 }
 
 function validationFunc(email, password) {
@@ -121,4 +140,43 @@ function showError(inputElement, errorMessage) {
 function resetErrorMessages() {
   const errorMessages = document.querySelectorAll(".error-message");
   errorMessages.forEach((errorMessage) => errorMessage.remove());
+}
+
+async function addToCart(itemId,price){
+  try {
+    const loggedInUser = storageService.getUser()
+    const newItem={
+      itemId:itemId,
+      price:price,
+      creatorId: loggedInUser._id,
+    }
+    const response=await fetch("/api/addItems",{
+      method:"POST",
+      headers: { "Content-Type": "application/json" },
+      body:JSON.stringify(newItem),
+    })
+    const data=await response.json()
+    if (!data.success) {
+      alert(data.message)
+      return
+    }
+    storageService.addOneItem(data.item)
+    const updateditems = storageService.getItems()
+    renderItems(updateditems)
+  } catch (error) {
+      console.log(error)
+  }
+}
+
+
+function renderItems(items) {
+  const strHTMLSs = items.map((item) => {
+    return `<tr>
+    <th>${item.itemId}</th>
+    <th>Quantity</th>
+    <th>${item.price}</th>
+  </tr>`
+  })
+  document.querySelector(".table-rows").innerHTML = strHTMLSs.join("")
+return
 }

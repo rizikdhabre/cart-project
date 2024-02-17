@@ -1,0 +1,86 @@
+* {box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .toolbar {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  background-color: black;
+  color: #fff;
+  padding: 40px;
+  display: flex;
+  justify-content: space-between;
+  z-index: 2;
+
+  }
+  
+  .welcome-class {
+    font-size: 20px;
+    cursor: pointer;
+    display: inline;
+  }
+  
+  .nav-links {
+    display: flex;
+    gap:7px;
+  }
+
+  .cart-Name{
+    position: relative;
+    margin-left: 70px;
+    margin-top: 2px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 40px;
+    color: #cac7d1;
+  }
+  
+  .nav-button {
+    position: relative;
+    margin-top: 10px;
+    padding: 8px;
+    cursor: pointer;
+    color: #cac7d1;
+    transition: background-color 0.3s ease;
+    background: none;
+    border: none;
+    font-size: 20px;
+    font-family:'Courier New', Courier, monospace
+  }
+  
+  .nav-button:hover {
+    background-color: #94d342;
+  }
+
+  .welcome-class {
+    font-size: 28px;
+    font-weight: bold;
+    color: #cac7d1;
+  }
+  
+  .curr-userName {
+    opacity: 0;   /* make the item disappear and changes n the keyframes*/
+    animation: appear 10s ease-out both infinite;   /* both => when the aniamtion is done the regular css come back*/
+    animation-delay: 0.77s; 
+  }
+  
+  @keyframes appear {
+    to {
+      opacity: 1;  /* appear the item*/
+    }
+  }
+
+    cart-table, th, td {
+    border: 1px solid black;
+  }
+
+.cart-table{
+  margin-top: 70px;
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid  black;
+}

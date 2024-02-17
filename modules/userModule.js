@@ -20,12 +20,18 @@ async function addUser(username, email, password) {
   }
 
   async function getUserByUserAndPassword(username,password){
-    const collection = await getCollection(entity)
-    const existUser = await collection.findOne({ username })
-    if ((!existUser)||!(existUser.password===password)) {
-      return {success:false}
+    try {
+      const collection = await getCollection(entity)
+      const existUser = await collection.findOne({ username })
+      if ((!existUser)||!(existUser.password===password)) {
+        return {success:false}
+      }
+      const { password: hashedPassword ,email:hashedEmail, ...user } = existUser;
+       return {success:true ,user };
+    } catch (error) {
+      console.log(error)
     }
-    return {success:true , username:username}
   }
 
+ 
   module.exports={addUser,getUserByUserAndPassword}
