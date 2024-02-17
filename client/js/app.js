@@ -99,11 +99,11 @@ function  initLogin(){
 async function init(){
   try {
     const user = storageService.getUser()
-  const username=user.username
-  if (!user) {
+  if (user===null) {
     window.location.href = "login.html"
     return
   }
+  const username=user.username
   document.getElementById("curr-userName").textContent=username
   const response = await fetch(`/api/item?userId=${user._id}`)
   const data = await response.json()
