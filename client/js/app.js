@@ -105,6 +105,10 @@ async function init(){
   }
   const username=user.username
   document.getElementById("curr-userName").textContent=username
+  const items=storageService.getItems()
+  if(items.length>0){
+    renderItems(items)
+  }else{
   const response = await fetch(`/api/item?userId=${user._id}`)
   const data = await response.json()
   if (!data.success) return alert(data.message)
@@ -112,7 +116,7 @@ async function init(){
   if (loadedItems || loadedItems.length > 0) {
     storageService.setItems(loadedItems)
     renderItems(loadedItems)
-  }
+  }}
   } catch (error) {
     console.log(error)
   }
@@ -149,6 +153,7 @@ async function addToCart(itemId,price){
       itemId:itemId,
       price:price,
       creatorId: loggedInUser._id,
+      quantity:1
     }
     const response=await fetch("/api/addItems",{
       method:"POST",
@@ -160,23 +165,62 @@ async function addToCart(itemId,price){
       alert(data.message)
       return
     }
-    storageService.addOneItem(data.item)
+    if(data.updated){
+      storageService.updateitem(data.item._id,data.item.quantity)
+    }else{
+      storageService.addOneItem(data.item)
     const updateditems = storageService.getItems()
+    console.log(updateditems);
     renderItems(updateditems)
+    }
   } catch (error) {
       console.log(error)
   }
 }
 
 
+async function removeItem(itemObjId) {
+  try {
+    const response = await fetch(`/api/item/${itemObjId}`, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+    })
+    const data = await response.json()
+    if (!data.success) {
+      alert(data.message)
+      return
+    }
+    storageService.removeOneItem(itemObjId)
+    const updatedItems = storageService.getItems()
+    renderItems(updatedItems)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+
 function renderItems(items) {
+  const tableRowsElement = document.querySelector(".table-rows");
+  if (!tableRowsElement) {
+    return;
+  }
   const strHTMLSs = items.map((item) => {
     return `<tr>
     <th>${item.itemId}</th>
-    <th>Quantity</th>
+    <th>${item.quantity}</th>
     <th>${item.price}</th>
+    <th class="total-price-cloumn">${item.price*item.quantity}</th>
+    <th><button class="remove-btn button-style" onclick="removeItem('${item._id}')">Remove</button></th>
   </tr>`
   })
-  document.querySelector(".table-rows").innerHTML = strHTMLSs.join("")
-return
+  const totalPrice=items.reduce((sum,item)=>{return sum+item.price*item.quantity},0)
+  const totalLine = `<tr>
+    <th>Total price</th>
+    <th class="final-total-price"></th>
+    <th class="final-total-price"></th>
+    <th class="final-total-price">${totalPrice}</th>
+    <th class="final-total-price"><button class="buy-items button-style">Purchase</button></th>
+  </tr>`;
+
+  document.querySelector(".table-rows").innerHTML = strHTMLSs.join("")+totalLine
 }

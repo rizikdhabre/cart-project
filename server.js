@@ -30,8 +30,16 @@ app.post("/api/register", async (req, res) => {
 
 app.post("/api/addItems", async(req,res)=>{
   try {
+    const {itemId,creatorId}=req.body
+    const counterOfItemsForSpecifcCreator= await cartModule.checkIfItemFoundForUser(creatorId,itemId)
+    if(counterOfItemsForSpecifcCreator>0){
+       let updateditem=await cartModule.updateItem(creatorId,itemId)
+       return res.send({success:true,item:updateditem ,updated:true})
+    }else{
     const newItem= await cartModule.createOneItem(req.body)
-    return res.send({success:true,item:newItem})
+    return res.send({success:true,item:newItem,updated:false})
+    }
+
   } catch (error) {
       console.log(error)
     return res.status(400).send({ success: false, message: error.message })
@@ -47,6 +55,15 @@ app.get("/api/item", async (req, res) => {
   }
 })
 
+app.delete("/api/item/:itemId", async (req, res) => {
+  try {
+    const { itemId } = req.params
+    await cartModule.removeItem(itemId)
+    res.send({ success: true })
+  } catch (error) {
+    return res.status(400).send({ success: false, message: error.message })
+  }
+})
 
 const PORT = 3000;
 app.listen(PORT, () => {
