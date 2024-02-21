@@ -1,5 +1,6 @@
 const { getCollection, toObjectId } = require("./dbModule.js");
 const entity = "items";
+const users="users"
 async function createOneItem(item) {
   try {
     const collection = await getCollection(entity);
@@ -78,7 +79,36 @@ async function getSpecificItemToChangeQuantity(userCreatorId, itemId) {
   }
 }
 
+async function getAllUsers(){
+  try {
+    const collection = await getCollection(users);
+    const allUsers = await collection.find({}, { projection: { _id: 1, username: 1 } }).toArray();
+      return allUsers;
+  } catch (error) {
+    console.log(error)
+  }
+}
 
+async function usersWithitems() {
+  try {
+    const users = await getAllUsers();
+    const usersWithItemsPromises = users
+      .filter((user) => user.username !== "admin")
+      .map(async (user) => {
+        const userId = user._id.toString();
+        const items = await getUserItems(userId);
+        return {
+          username: user.username,
+          items: items,
+        };
+      });
+
+    const usersWithItems = await Promise.all(usersWithItemsPromises);
+    return usersWithItems;
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 module.exports = {
   createOneItem,
@@ -86,4 +116,7 @@ module.exports = {
   getUserItems,
   checkIfItemFoundForUser,
   updateItem,
+  usersWithitems,
 };
+
+

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/adminpage.css">
+    <title>Admin Page</title>
+</head>
+<body>
+    <body onload="initAdminPage()">
+      <div class="table-container">
+        <div class="cart-contaienr">
+            <div class="toolbar">
+                <div class="welcome-class nav-button">
+                  Welcome, <span class="curr-userName" id="curr-userName"></span>
+                </div>
+                <div class="cart-Name">Silk Road Cart</div>
+                <div class="nav-links">
+                  </button>
+                  <button class="nav-button" id="logoutButton" onclick="logout()">
+                    Logout
+                  </button>
+                </div>
+              </div>
+              <div class="table-container">
+                <table class="cart-table-Admin">
+                  <tr>
+                    <th><h1>User Name</h1></th>
+                    <th><h1>Item Name</h1></th>
+                    <th><h1>Quantity</h1></th>
+                    <th><h1>Price Per One</h1></th>
+                    <th><h1>Price For All</h1></th>
+                  </tr>
+                  <tbody class="table-rows"></tbody>
+                </table>
+              </div>
+        </div>
+      </div>
+        <script src="js/storageService.js"></script>
+        <script src="js/app.js"></script>
+    </body>
+</body>
+</html>

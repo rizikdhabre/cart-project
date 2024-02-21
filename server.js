@@ -65,6 +65,22 @@ app.delete("/api/item/:itemId", async (req, res) => {
   }
 })
 
+app.post("/api/getAllItems/:username", async (req, res) => {
+  try {
+    const { username } = req.params
+    if(username!=="admin"){
+      res.send({ success: false })
+      return
+    }
+    const allUsers= await cartModule.usersWithitems()
+    res.send({ success: true , details:allUsers})
+  } catch (error) {
+    return res.status(400).send({ success: false, message: error.message })
+  }
+})
+
+
+
 const PORT = 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);

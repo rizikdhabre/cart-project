@@ -89,11 +89,11 @@ body {
     flex-direction: row;
     justify-content: space-between;
   }
-  .men-item {
+  .products-items {
     border: 1px solid black;
 }
 
-.men-item img:hover{
+.products-items img:hover{
     transform: scale(1.1);
     transition: transform  2 ease;
     cursor: pointer;

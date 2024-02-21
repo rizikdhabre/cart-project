@@ -43,17 +43,15 @@ async function signup(event) {
   }
 }
 
-function goProducts(){
-    window.location.href="/products.html"
+function goProducts() {
+  window.location.href = "/products.html";
 }
-function goHome(){
-  window.location.href="/home.html"
+function goHome() {
+  window.location.href = "/home.html";
 }
-function goCart(){
-  window.location.href="/cart.html"
+function goCart() {
+  window.location.href = "/cart.html";
 }
-
-
 
 async function login(event) {
   try {
@@ -76,51 +74,71 @@ async function login(event) {
       }
       return;
     }
-    const loggedInUser=data.user
-    storageService.setUser(loggedInUser)
-    window.location.href = "/home.html"
+    const loggedInUser = data.user;
+    storageService.setUser(loggedInUser);
+    window.location.href = "/home.html";
   } catch (error) {
     console.log(error);
   }
 }
 
 function logout() {
-  storageService.clearAll()
-  window.location.href = "/login.html"
+  storageService.clearAll();
+  window.location.href = "/login.html";
 }
 
-function  initLogin(){
-  const user=storageService.getUser()
-  if(user){
-    window.location.href="/home.html"
+function initLogin() {
+  const user = storageService.getUser();
+  if (user) {
+    window.location.href = "/home.html";
   }
 }
 
-async function init(){
+function initAdminPage() {
+  const user = storageService.getUser();
+  if (user === null) {
+    window.location.href = "login.html";
+    return;
+  } else {
+    if (!(user.username === "admin")) {
+      window.location.href = "home.html";
+      return;
+    } else {
+      const username = user.username;
+      document.getElementById("curr-userName").textContent = username;
+      renderItemsForAdmin();
+    }
+  }
+}
+
+async function init() {
   try {
-    const user = storageService.getUser()
-  if (user===null) {
-    window.location.href = "login.html"
-    return
-  }
-  const username=user.username
-  document.getElementById("curr-userName").textContent=username
-  const items=storageService.getItems()
-  if(items.length>0){
-    renderItems(items)
-  }else{
-  const response = await fetch(`/api/item?userId=${user._id}`)
-  const data = await response.json()
-  if (!data.success) return alert(data.message)
-  const loadedItems = data.items
-  if (loadedItems || loadedItems.length > 0) {
-    storageService.setItems(loadedItems)
-    renderItems(loadedItems)
-  }}
+    const user = storageService.getUser();
+    if (user === null) {
+      window.location.href = "login.html";
+      return;
+    }
+    const username = user.username;
+    document.getElementById("curr-userName").textContent = username;
+    if (username === "admin") {
+      window.location.href = "admin.html";
+    }
+    const items = storageService.getItems();
+    if (items.length > 0) {
+      renderItems(items);
+    } else {
+      const response = await fetch(`/api/item?userId=${user._id}`);
+      const data = await response.json();
+      if (!data.success) return alert(data.message);
+      const loadedItems = data.items;
+      if (loadedItems || loadedItems.length > 0) {
+        storageService.setItems(loadedItems);
+        renderItems(loadedItems);
+      }
+    }
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-
 }
 
 function validationFunc(email, password) {
@@ -146,58 +164,55 @@ function resetErrorMessages() {
   errorMessages.forEach((errorMessage) => errorMessage.remove());
 }
 
-async function addToCart(itemId,price){
+async function addToCart(itemId, price) {
   try {
-    const loggedInUser = storageService.getUser()
-    const newItem={
-      itemId:itemId,
-      price:price,
+    const loggedInUser = storageService.getUser();
+    const newItem = {
+      itemId: itemId,
+      price: price,
       creatorId: loggedInUser._id,
-      quantity:1
-    }
-    const response=await fetch("/api/addItems",{
-      method:"POST",
+      quantity: 1,
+    };
+    const response = await fetch("/api/addItems", {
+      method: "POST",
       headers: { "Content-Type": "application/json" },
-      body:JSON.stringify(newItem),
-    })
-    const data=await response.json()
+      body: JSON.stringify(newItem),
+    });
+    const data = await response.json();
     if (!data.success) {
-      alert(data.message)
-      return
+      alert(data.message);
+      return;
     }
-    if(data.updated){
-      storageService.updateitem(data.item._id,data.item.quantity)
-    }else{
-      storageService.addOneItem(data.item)
-    const updateditems = storageService.getItems()
-    console.log(updateditems);
-    renderItems(updateditems)
+    if (data.updated) {
+      storageService.updateitem(data.item._id, data.item.quantity);
+    } else {
+      storageService.addOneItem(data.item);
+      const updateditems = storageService.getItems();
+      renderItems(updateditems);
     }
   } catch (error) {
-      console.log(error)
+    console.log(error);
   }
 }
-
 
 async function removeItem(itemObjId) {
   try {
     const response = await fetch(`/api/item/${itemObjId}`, {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
-    })
-    const data = await response.json()
+    });
+    const data = await response.json();
     if (!data.success) {
-      alert(data.message)
-      return
+      alert(data.message);
+      return;
     }
-    storageService.removeOneItem(itemObjId)
-    const updatedItems = storageService.getItems()
-    renderItems(updatedItems)
+    storageService.removeOneItem(itemObjId);
+    const updatedItems = storageService.getItems();
+    renderItems(updatedItems);
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
 }
-
 
 function renderItems(items) {
   const tableRowsElement = document.querySelector(".table-rows");
@@ -209,11 +224,15 @@ function renderItems(items) {
     <th>${item.itemId}</th>
     <th>${item.quantity}</th>
     <th>${item.price}</th>
-    <th class="total-price-cloumn">${item.price*item.quantity}</th>
-    <th><button class="remove-btn button-style" onclick="removeItem('${item._id}')">Remove</button></th>
-  </tr>`
-  })
-  const totalPrice=items.reduce((sum,item)=>{return sum+item.price*item.quantity},0)
+    <th class="total-price-cloumn">${item.price * item.quantity}</th>
+    <th><button class="remove-btn button-style" onclick="removeItem('${
+      item._id
+    }')">Remove</button></th>
+  </tr>`;
+  });
+  const totalPrice = items.reduce((sum, item) => {
+    return sum + item.price * item.quantity;
+  }, 0);
   const totalLine = `<tr>
     <th>Total price</th>
     <th class="final-total-price"></th>
@@ -222,5 +241,56 @@ function renderItems(items) {
     <th class="final-total-price"><button class="buy-items button-style">Purchase</button></th>
   </tr>`;
 
-  document.querySelector(".table-rows").innerHTML = strHTMLSs.join("")+totalLine
+  document.querySelector(".table-rows").innerHTML =
+    strHTMLSs.join("") + totalLine;
+}
+
+async function renderItemsForAdmin() {
+  try {
+    const username = storageService.getUser();
+    const response = await fetch(`/api/getAllItems/${username.username}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+    });
+    const data = await response.json();
+    if (!data.success) {
+      return;
+    }
+    const allUsers = data.details;
+    const strHTMLSs = allUsers.flatMap((user) => {
+        if(user.items.length>0){
+      const totalPrice = user.items.reduce((sum, item) => {
+        return sum + item.price * item.quantity;
+      }, 0);
+    
+      return [
+        ...user.items.map((item) => {
+          return `<tr>
+            <th>${user.username}</th>
+            <th>${item.itemId}</th>
+            <th>${item.quantity}</th>
+            <th>${item.price}</th>
+            <th class="total-price-column">${item.price * item.quantity}</th>
+          </tr>`;
+        }),
+        `<tr>
+          <th></th>
+          <th class="final-total-price"></th>
+          <th class="final-total-price"></th>
+          <th class="final-total-price"></th>
+          <th class="final-total-price"> Total price:${totalPrice}</th>
+        </tr>`
+      ];
+    
+    }
+    });
+    
+    document.querySelector(".table-rows").innerHTML =
+      (strHTMLSs.length > 0 ? strHTMLSs.join("") : "<tr><th colspan='5'>No items</th></tr>");
+    
+    
+
+  } catch (error) {
+    console.log(error);
+  }
 }
